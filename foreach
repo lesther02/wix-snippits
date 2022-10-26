@@ -1,0 +1,3 @@
+ results.items.forEach((item ) => {  
+    sumTotal = sumTotal + item.incAmount; // add each value to sumTotal
+});
