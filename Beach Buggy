@@ -1,0 +1,264 @@
+import wixData from 'wix-data';
+
+$w.onReady( async function () {
+
+resetDatepicker();
+
+});
+
+export function CartSize_change(event) {
+
+    resetDatepicker();
+
+let days = Number($w('#Days').value);
+let price = Number($w('#CartSize').value);
+let dys = 0;
+
+
+const dateFrom = $w("#datePicker1").value;
+const dateTo = $w("#datePicker2").value;
+
+console.log(dateFrom+' - '+dateTo);
+if(dateFrom!==null && dateTo!==null){
+    dys = dateTo.getTime()-dateFrom.getTime();
+    console.log(dys);
+}
+dys += 1;
+let diffDays = Math.ceil(dys / (1000 * 3600 * 24));
+console.log(diffDays);
+let fprice = 0;
+let temp = 0;
+for(let i=1; i<=diffDays; i++){
+    temp = price - ((i - 1)*2);
+    fprice += temp;
+}
+
+$w('#input11').value = fprice;
+$w('#input10').value = 250 + fprice;
+
+$w('#input11').show();
+$w('#input10').show();
+$w('#Price').value = fprice;
+}
+
+export function Days_change(event) {
+// $w('#input9').value = "Total Price: $" + (Number($w('#CartSize').value) * Number($w('#Days').value));
+let days = Number($w('#Days').value);
+let price = Number($w('#CartSize').value);
+
+let fprice = 0;
+let temp = 0;
+for(let i=1; i<=days; i++){
+    if(i<=7){
+            temp = price - ((i - 1)*2);
+        }else{
+            temp = price - 14;
+        }
+        
+        fprice += temp;
+}
+
+$w('#input11').value = fprice;
+$w('#input10').value = 250 + fprice;
+$w('#input10').show(); 
+$w('#input11').show();
+}
+
+export function datePicker1_change(event) {
+
+    let days = Number($w('#Days').value);
+    let price = Number($w('#CartSize').value);
+    let dys = 0;
+
+    const dateFrom = $w("#datePicker1").value;
+    const dateTo = $w("#datePicker2").value;
+    console.log(dateFrom+' - '+dateTo);
+    if(dateFrom!==null && dateTo!==null){
+        dys = dateTo.getTime() - dateFrom.getTime();
+    }
+    dys += 1;
+    let diffDays = Math.ceil(dys / (1000 * 3600 * 24));
+
+    let fprice = 0;
+    let temp = 0;
+    for(let i=1; i<=diffDays; i++){
+        if(i<=7){
+            temp = price - ((i - 1)*2);
+        }else{
+            temp = price - 14;
+        }
+        
+        fprice += temp;
+    }
+    $w('#input11').value = fprice;
+    $w('#input10').value = 250 + fprice;
+
+    $w('#input11').show();
+    $w('#input10').show();
+    $w('#Price').value = fprice;
+}
+
+export function datePicker2_change(event) {
+    let days = Number($w('#Days').value);
+    let price = Number($w('#CartSize').value);
+    let dys = 0;
+
+    const dateFrom = $w("#datePicker1").value;
+    const dateTo = $w("#datePicker2").value;
+    if(dateFrom!==null && dateTo!==null){
+        dys = dateTo.getTime() - dateFrom.getTime();
+    }
+    dys += 1;
+    let diffDays = Math.ceil(dys / (1000 * 3600 * 24));
+    console.log(diffDays);
+
+    let fprice = 0;
+    let temp = 0;
+    for(let i=1; i<=diffDays; i++){
+        if(i<=7){
+            temp = price - ((i - 1)*2);
+        }else{
+            temp = price - 14;
+        }
+        
+        fprice += temp;
+    }
+    $w('#input11').value = fprice;
+    $w('#input10').value = 250 + fprice;
+
+    $w('#input11').show();
+    $w('#input10').show();
+    $w('#Price').value = fprice;
+}
+
+async function resetDatepicker() {
+
+    let legitdate = [];
+    let tempdate = [];
+    let thoushallnot = [];
+    let cart_size = $w('#CartSize').value;
+    let currentDate = new Date() ;
+        currentDate.setHours(0);
+        currentDate.setSeconds(0);
+        currentDate.setMilliseconds(0);
+        currentDate.setMinutes(0)
+    console.log("1");
+    let options = {
+	  "suppressAuth": true,
+	  "suppressHooks": false
+	};
+
+        // $w('#CartSize').disable();
+
+    await wixData.query("paymentForm052")
+    .eq("dropdownField2", cart_size)
+    .find()
+    .then( (results) => {
+        console.log("2");
+        
+        if(results.items.length > 0) {
+
+            for(var i=0; i<=results.items.length; i++){
+                var fromDate = new Date(results.items[i].dateField);
+                var toDate = new Date(results.items[i].dateField2);
+                
+                if(new Date(fromDate).getTime() >= new Date(currentDate).getTime()){
+                    legitdate.push({'from':new Date(fromDate),'to':new Date(toDate)});
+                }
+            }
+            
+        } else {
+        // handle case where no matching items found
+        }
+    } )
+        .catch( (err) => {
+        let errorMsg = err;
+        console.log(errorMsg);
+    } );
+
+    console.log("3");
+    let sortedate = legitdate.sort((a,b)=>a.from - b.from)
+    console.log(sortedate);
+    
+    // dd.forEach(item => console.log(item.from));
+    if(~~cart_size === 145){
+        sortedate.map(function(item) {
+            var fromDate = new Date(item.from);
+            var toDate = new Date(item.to);
+
+            while(new Date(fromDate).getTime() <= new Date(toDate).getTime()){
+                tempdate.push(new Date(fromDate));
+                fromDate.setDate(fromDate.getDate() + 1);
+            }
+        });
+        
+        let groupdate = tempdate.sort((a,b)=>a - b);
+        console.log(groupdate);
+
+        let grouped = groupdate.reduce((r, v, i, a) => {
+            if (new Date(v).getTime() == new Date(a[i - 1]).getTime()) {
+                r[r.length - 1].push(v);
+            } else {
+                r.push(new Date(v).getTime() == new Date(a[i + 1]).getTime() ? [v] : v);
+            }
+            return r;
+        }, []);
+            
+        grouped.map(function(item) {
+            if(Array.isArray(item)){
+                if(item.length >= 2){
+                    thoushallnot.push(new Date(item[0]));
+                }
+            }
+        });
+    }
+
+    if(~~cart_size === 156){
+        sortedate.map(function(item) {
+            var fromDate = new Date(item.from);
+            var toDate = new Date(item.to);
+
+            while(new Date(fromDate).getTime() <= new Date(toDate).getTime()){
+                tempdate.push(new Date(fromDate));
+                fromDate.setDate(fromDate.getDate() + 1);
+            }
+        });
+        
+        let groupdate = tempdate.sort((a,b)=>a - b);
+        console.log(groupdate);
+
+        let grouped = groupdate.reduce((r, v, i, a) => {
+            if (new Date(v).getTime() == new Date(a[i - 1]).getTime()) {
+                r[r.length - 1].push(v);
+            } else {
+                r.push(new Date(v).getTime() == new Date(a[i + 1]).getTime() ? [v] : v);
+            }
+            return r;
+        }, []);
+            
+        grouped.map(function(item) {
+            if(Array.isArray(item)){
+                if(item.length >= 5){
+                    thoushallnot.push(new Date(item[0]));
+                }
+            }
+        });
+    }
+
+    if(~~cart_size === 168){
+        sortedate.map(function(item) {
+            var fromDate = new Date(item.from);
+            var toDate = new Date(item.to);
+
+            while(new Date(fromDate).getTime() <= new Date(toDate).getTime()){
+                thoushallnot.push(new Date(fromDate));
+                fromDate.setDate(fromDate.getDate() + 1);
+            }
+        });
+    }
+
+    $w("#datePicker1").disabledDates = thoushallnot;
+    $w("#datePicker2").disabledDates = thoushallnot;
+
+}
+
