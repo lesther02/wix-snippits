@@ -1,0 +1,28 @@
+$w.onReady(function () {
+typeAndErase($w("#text19")) //Just the function call
+})
+
+function typeAndErase(textElement) {
+    let interval
+    let timeInterval = 300
+    let typeStrings = ["THE POETRY OF LOVE", "BEST LIFE PARTNER", "PERFECT WEDDING STORY"]
+    let wordIdx = 0
+    let typeIdx = 0
+    let displayStr = ""
+    let endingString = "|"
+
+    textElement.text = ""
+    interval = setInterval(() => {
+        displayStr = displayStr + typeStrings[wordIdx][typeIdx]
+        typeIdx++
+
+        textElement.text = displayStr + endingString
+
+        if (typeIdx === typeStrings[wordIdx].length) {
+            wordIdx++
+            displayStr = ""
+            typeIdx = 0
+            wordIdx === typeStrings.length ? wordIdx = 0:''
+        }
+    }, timeInterval)
+}
