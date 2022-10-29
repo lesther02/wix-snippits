@@ -1,0 +1,23 @@
+$w.onReady(function () {
+let toggle = true;
+  const animationCycle = 2000;
+  const animationDuration = 1000;
+  const hideDelay = 500;
+  setInterval(() => {
+    if (toggle) {
+      $w('#text1').show('slide', { duration: animationDuration,
+        direction: 'right' });
+    } else {
+      $w('#text2').show('slide', { duration: animationDuration,
+        direction: 'right' });
+    }
+    setTimeout(() => {
+      if (toggle) {
+        $w('#text2').hide('slide', { duration: animationDuration });
+      } else {
+        $w('#text1').hide('slide', { duration: animationDuration });
+      }
+      toggle = !toggle;
+    }, hideDelay);
+  }, animationCycle);
+})
