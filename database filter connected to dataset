@@ -1,0 +1,5 @@
+let newFilter = wixData.filter();
+	newFilter = newFilter
+	.contains('category','FACT SHEETS')
+
+	$w('#dataset1').setFilter(newFilter); 
