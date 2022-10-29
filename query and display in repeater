@@ -1,0 +1,16 @@
+async function loadAllProducts(){
+
+	$w("#repeater1").onItemReady( ($item, itemData, index) => {
+		$item("#image5").src = itemData.mainMedia;
+		$item("#text12").text = itemData.name;
+		$item("#text11").text = itemData.description;
+		$item("#image5").link = itemData.productPageUrl;
+		$item("#text22").text = 'Fits:' + ' ' + itemData.additionalInfoSections[0].description;
+	})
+
+	await wixData.query("Stores/Products")
+    .find()
+	.then( (results) => {
+		$w("#repeater1").data = results.items;
+	})
+}
