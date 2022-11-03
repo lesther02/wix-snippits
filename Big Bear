@@ -1,0 +1,109 @@
+import wixLocation from 'wix-location';
+import wixData from 'wix-data';
+
+let claimed = 'false';
+
+$w.onReady(async function () {
+
+	let path = wixLocation.prefix + '/' + wixLocation.path;
+	
+	console.log(path);
+	
+	profile/generationwix,blank-5
+
+	await load_qrCode()
+
+	claimed = await checkClaimed();
+	if(claimed === 'true'){
+		$w("#button20").hide();
+		$w("#image95").show();
+	}
+});
+
+async function load_qrCode(){
+
+	$w("#repeater1").onItemReady( ($item, itemData, index) => {
+		$item("#image94").src = itemData.qrCode;
+
+	})
+	
+	let path = wixLocation.prefix + '/' + wixLocation.path;
+	let field = path.split('/')[1]
+	// console.log(field)
+		await wixData.query("BUSINESSLISTING")
+		.eq('simplifiedName',field)
+		.find()
+		.then((results) => {
+			// console.log(results)
+			$w("#repeater1").data = results.items;
+			console.log('stop');
+		})
+}
+
+async function checkClaimed(){
+	console.log('checked')
+	let path = wixLocation.prefix + '/' + wixLocation.path;
+	let field = path.split('/')[1]
+	// console.log(field)
+	
+	let checked = 'false';
+	// let email = '';
+	// await wixData.query("Members/PrivateMembersData")
+    // .eq("_id", userId)
+    // .find()
+    // .then( (results) => {
+	// 	email = results.items[0].loginEmail;
+	// })
+	// .catch( (err) => {
+	// let errorMsg = err;
+	// console.log(errorMsg);
+	// })
+
+	await wixData.query("BUSINESSLISTING")
+	.eq('simplifiedName',field)
+	.find()
+	.then( (data) => {
+		let item = data.items[0];
+		if(item.claimed === true){
+			checked = 'true';
+		}
+	})
+	.catch( (err) => {
+	let errorMsg = err;
+	console.log(errorMsg);
+	})
+
+	console.log(checked);
+	return checked;
+}
+
+export async function button20_click(event) {
+	
+	let path = wixLocation.prefix + '/' + wixLocation.path;
+	let field = path.split('/')[1]
+	console.log(field)
+
+	await wixData.query("BUSINESSLISTING")
+	.eq('simplifiedName',field)
+	.find()
+	.then( (results) => {
+		if(results.items.length > 0) {
+		let item = results.items[0]
+
+			item.claimed = true;
+
+			wixData.update('BUSINESSLISTING', item);
+
+			$w("#button20").hide();
+			$w('#image95').show()
+		}else{
+			console.log('cannot be');
+			$w('#image95').hide()
+			$w("#button20").show();
+		}
+	})
+	.catch( (err) => {
+	let errorMsg = err;
+	console.log(errorMsg);
+	})
+}
