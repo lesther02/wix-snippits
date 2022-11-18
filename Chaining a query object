@@ -1,0 +1,12 @@
+let wixQuery = wixData.query("Profiles").gt("age", 20).ascending("name")
+let query
+if (condition is met) {
+  query = wixQuery.limit(10)
+} else {
+  query  = wixQuery.limit(20)
+ } 
+
+query.find()
+  .then( (results) => {
+    //do something with results
+  } );
