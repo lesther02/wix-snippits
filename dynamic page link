@@ -1,0 +1,2 @@
+wixLocation.to("/items/"+itemData._id);
+wixLocation.to(itemData['link-copy-of-items-2-title']);
