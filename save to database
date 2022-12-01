@@ -1,0 +1,30 @@
+export function button16_click(event) {
+		let toSave = {
+		"companyName":   $w('#input25').value,
+		"companyAddress":   $w('#input26').value,
+		"phoneNumber":   $w('#input27').value,
+		"emailAddress":   $w('#input28').value,
+		"password":   $w('#input41').value,
+		"contactName":   $w('#input29').value,
+		"contactLastName":   $w('#input43').value,
+		"title":   $w('#input30').value,
+		"directLine":   $w('#input31').value,
+		"email":   $w('#input32').value,		
+		}
+
+	wixData.save("LenderBroker", toSave)
+	.then((results) => {
+		regUserLenderBroker();
+		$w('#input25').value = ''
+		$w('#input26').value = ''
+		$w('#input27').value = ''
+		$w('#input28').value = ''
+		$w('#input29').value = ''
+		$w('#input30').value = ''
+		$w('#input31').value = ''
+		$w('#input32').value = ''
+		})
+	.catch( (err) => {
+	let errorMsg = err;
+	})
+	}
