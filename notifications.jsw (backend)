@@ -1,0 +1,14 @@
+import wixCrm from 'wix-crm-backend';
+
+export function quoteRequest() {
+    wixCrm.notifications.notify(
+    "Product Request Quote", 
+    ["Browser","Dashboard","Mobile"], 
+    {
+        "title": "New Quote Request",
+        "actionTitle": "View it now",
+        "actionTarget": {"url": "https://manage.wix.com/dashboard/a6004b6c-f12c-41b1-a1eb-ec39ffd0f4d5/database/data/RequestForm"}, //Add the URL where you want to be redirected after you click on the notification
+        "recipients": { "role": "All_Contributors"}
+    }
+    );
+}
