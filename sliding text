@@ -1,23 +1,29 @@
+import { timeline } from 'wix-animations';
+
 $w.onReady(function () {
-let toggle = true;
-  const animationCycle = 2000;
-  const animationDuration = 1000;
-  const hideDelay = 500;
-  setInterval(() => {
-    if (toggle) {
-      $w('#text1').show('slide', { duration: animationDuration,
-        direction: 'right' });
-    } else {
-      $w('#text2').show('slide', { duration: animationDuration,
-        direction: 'right' });
-    }
-    setTimeout(() => {
-      if (toggle) {
-        $w('#text2').hide('slide', { duration: animationDuration });
-      } else {
-        $w('#text1').hide('slide', { duration: animationDuration });
-      }
-      toggle = !toggle;
-    }, hideDelay);
-  }, animationCycle);
-})
+
+    bannerSlidingText()
+
+});
+
+function bannerSlidingText() {
+    let toggle = true;
+    const animationCycle = 4000;
+    const animationDuration = 1500;
+    const hideDelay = 500;
+    setInterval(() => {
+        if (toggle) {
+            $w('#text3').show('slide', { duration: animationDuration, direction: 'right' });
+			$w('#text4').show('slide', { duration: animationDuration, direction: 'left' });
+			$w('#button3').show('slide', { duration: animationDuration, direction: 'bottom' });           
+        }
+        setTimeout(() => {
+            if (toggle) {
+                $w('#text4').hide('slide', { duration: animationDuration, direction: 'right'  });
+                $w('#text3').hide('slide', { duration: animationDuration, direction: 'left'  });
+				$w('#button3').hide('slide', { duration: animationDuration, direction: 'bottom' });  
+            }
+            toggle = !toggle;
+        }, hideDelay);
+    }, animationCycle);
+}
