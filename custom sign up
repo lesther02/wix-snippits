@@ -1,0 +1,69 @@
+import { authentication } from 'wix-members';
+import wixLocation from 'wix-location';
+import wixData from 'wix-data';
+
+let emails = [];
+
+$w.onReady(function () {
+
+  $w('#password').inputType = 'password'
+
+  $w('#registerButton').onClick( () => {
+    regUser();
+    // saveinfo()
+  });
+});
+
+// function saveinfo(){
+//   let toSave = {
+//   'firstName':  $w('#firstName').value,
+//   'lastName':  $w('#lastName').value,
+//   'email':  $w('#email').value,
+//   'shortAnswerField2': $w('#password').value,
+//   'checkboxField': $w('#checkbox2').value,
+//   'shortAnswerField3':  $w('#input19').value,
+//   'shortAnswerField4':  $w('#input20').value,
+//   'shortAnswerField5':  $w('#input21').value,
+//   'shortAnswerField6':  $w('#input22').value,
+//   'shortAnswerField7':  $w('#input23').value,
+//   'phone':  $w('#input24').value,
+//   'multiCheckboxField': $w('#checkboxGroup4').value,
+//   'shortAnswerField8': $w('#input25').value,
+//   'multiCheckboxField2': $w('#checkboxGroup5').value,
+//   'multiCheckboxField3': $w('#checkboxGroup6').value,
+//   'shortAnswerField9': $w('#input26').value,
+// }
+
+// wixData.save("contact11", toSave)
+//   .then((results) => {
+//     console.log(results); //see item below
+    
+//  })
+//   .catch((err) => {
+//     console.log(err);
+//  });
+// }
+
+function regUser(){
+   const password = $w('#password').value;
+   const email = $w('#email').value;
+   emails.push(email);
+    
+   let options = {
+     contactInfo: {
+       firstName: $w('#firstName').value,
+       lastName: $w('#lastName').value,
+    //   //  emails: emails,
+     },
+     privacyStatus: 'PUBLIC'
+   }
+     authentication.register(email, password, options)
+     .then((registrationResult) => {
+       const status = registrationResult.status;
+       console.log('Member registered and logged in:', registrationResult);
+        wixLocation.to('/home')
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+}
