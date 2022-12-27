@@ -1,0 +1,3 @@
+setInterval(() => {
+  $w("#text3").hidden ? $w("#text3").show() :     $w("#text3").hide();
+}, 1000)
