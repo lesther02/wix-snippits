@@ -1,0 +1,12 @@
+let user = wixUsers.currentUser;
+	if(user.loggedIn){
+		user.getRoles()
+		.then( (roles) => {
+			console.log(roles)
+			if (roles.some(r => r.name === "Admin")){
+			  console.log('Roles: ' + roles[0].name)
+			$w("#button9").show();
+			$w("#text12").show();
+			}
+		})
+	}
