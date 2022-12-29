@@ -1,0 +1,18 @@
+let lastFilterTitle;
+let debounceTimer;
+export function search_keyPress(event) {
+if (debounceTimer) {
+    clearTimeout(debounceTimer);
+    debounceTimer = undefined;
+  }
+  debounceTimer = setTimeout(() => {
+    filter($w('#search').value);  
+  }, 100);
+}
+
+function filter(title) {
+ if (lastFilterTitle !== title) {
+  $w('#dataset1').setFilter(wixData.filter().contains('itemPageText', title));
+  lastFilterTitle = title;
+  }
+}
