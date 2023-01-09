@@ -1,0 +1,33 @@
+import wixUsers from 'wix-users';
+import wixLocation from 'wix-location';
+import wixWindow from 'wix-window';
+
+$w.onReady(function () {
+ $w("#forgotPassword").onClick( (event) => {
+    //wixWindow.lightbox.close()
+   wixUsers.promptForgotPassword()
+   .then( ( ) => {
+   //
+   } )
+    .catch( (err) => {
+    let errorMsg = err;  //"The user closed the forgot password dialog"
+    });
+ });
+});
+
+export function loginButton_onclick(event) {
+
+ let email = $w("#email").value;
+ let password = $w("#password").value;
+
+ wixUsers.login(email, password)
+   .then( () => {
+     console.log("User is logged in");
+     wixWindow.lightbox.close();
+     wixLocation.to(wixLocation.url);  //This reloads the same page.
+   } )
+    .catch( (err) => {
+     console.log(err);
+     $w("#errorMessage").expand();  // You can delete this line if you are not going to add an error message.  Use a regular text element set to 'collapse on load' from the Properties Panel.
+   } ); 
+}
