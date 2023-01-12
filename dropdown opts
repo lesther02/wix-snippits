@@ -1,0 +1,15 @@
+function loadCompany(){
+	let ctr = 0;
+	wixData.query('contact112')
+	.ascending('shortAnswerField3')
+	.distinct('shortAnswerField3')
+	// .find()
+    .then(res => {
+		let Optionslist = [];
+			for (var i = 0; i < res.items.length; i++) {
+				Optionslist.push( { _id: ctr.toLocaleString(), value: res.items[i], label: res.items[i] } );
+				ctr++;
+			}
+			$w("#dropdown2").options = Optionslist;
+	})
+}
