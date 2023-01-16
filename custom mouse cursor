@@ -1,0 +1,52 @@
+=====================================================================
+    CSS code (uses to set the style & position of the shape that follows the mouse): 
+=====================================================================
+<style>
+        body {
+            cursor: none;
+            min-height: 100%;
+            background: white;
+        }
+        
+        #myCustomCursor {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background: rgb(255 255 255);
+            border-radius: 50%;
+            top: var(--y, 0);
+            left: var(--x, 0);
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            pointer-events: none;
+            transition-duration: 300ms;
+            transition-timing-function: ease-out;
+            z-index: 999999!important;
+        }
+    </style>
+
+=====================================================================================
+    JavaScript code (uses to create the shape and reposition the shape based on the mouse position):
+=====================================================================================
+<script>
+    function createCustomCursor() {
+        const cursor = document.createElement("div");
+        cursor.setAttribute("id", "myCustomCursor");
+        document.body.appendChild(cursor);
+
+        initCustomCursor(cursor)
+    }
+
+    function initCustomCursor(cursor) {
+        document.body.onmousemove = function(e) {
+            cursor.style.setProperty('--x', (e.clientX) + 'px');
+            cursor.style.setProperty('--y', (e.clientY) + 'px');
+        }
+    }
+
+if (window.innerWidth > 1024) {   
+	    createCustomCursor();
+} else {
+console.log('Screen size is smaller then 1024px width')
+}
+</script>
