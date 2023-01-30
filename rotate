@@ -1,0 +1,12 @@
+import wixAnimations from 'wix-animations';
+
+const infinity_rotation_timeline = wixAnimations.timeline({ repeat: -1 });
+
+$w.onReady(function () {
+    initRotationAnimation();
+});
+
+function initRotationAnimation() {
+    const element_to_rotate = $w('#yourElementId');
+    infinity_rotation_timeline.add(element_to_rotate, { rotate: 360, duration: 40000, easing: 'easeLinear' }).play();
+}
