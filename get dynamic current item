@@ -1,0 +1,6 @@
+$w("#dynamicDataset").onReady(() => {
+
+        let itemObj = $w("#dynamicDataset").getCurrentItem();
+        console.log(itemObj.title)
+        
+     })
