@@ -10,3 +10,27 @@ query.find()
   .then( (results) => {
     //do something with results
   } );
+
+
+
+///////////////////////////////////////////////////////////////////////////
+
+let wixQuery = wixData.query("CampDirectory").limit(1000)
+		let query = wixQuery
+		if($w('#dropdown1').value !== ''){
+			query  = query.eq('howManyWeeksIsYourCamp', Number($w('#dropdown1').value))
+		}
+		if($w('#dropdown2').value !== ''){
+			query  = query.eq('howManyCounselorsDoYouNeed', Number($w('#dropdown2').value))
+		}
+		if($w('#radioGroup1').value !== ''){
+			query  = query.contains('areYouStillAcceptingApplicationsForThe57832023Summer', $w('#radioGroup1').value)
+		}
+		if($w('#radioGroup2').value !== ''){
+			query  = query.contains('willYouAcceptMultipleGroupsOfStaff', $w('#radioGroup2').value)
+		}
+		query .find()
+		.then( (results) => {
+			console.log(results)
+			if(results.items.length>0){$w("#repeater1").data = results.items;}else{$w("#repeater1").data = []}
+		})
