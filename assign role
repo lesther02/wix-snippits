@@ -1,0 +1,19 @@
+----role.jsw----
+
+import {roles} from 'wix-users-backend';
+
+ export function assignRole(roleId, memberId) {
+ return roles.assignRole(roleId, memberId, { suppressAuth: true })
+ .then( () => {
+      console.log("Role assigned to member");
+ })
+ .catch((error) => {
+      console.log("failed to assing role"+ error);
+ });
+}
+
+
+----page code----
+// Insert after .then(() => {
+let roleId="cbfc6597-2951-4fb7-8fa0-6577ea994c82"; // Brands Role ID
+assignRole(roleId, registrationResult.member._id);
