@@ -32,3 +32,43 @@ export function button12_click(event, $w) {
         $w("#button12").label = "Read more";
     }
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+let fullText;
+let shortText;
+
+$w.onReady(function () {
+    
+    const shortTextLength = 250;
+        fullText = $w('#text12').text
+        if (!fullText) {
+            $w('#text12').collapse();
+            $w('#button12').collapse();
+        } else {
+
+            if (fullText.length <= shortTextLength) {
+                $w('#text12').text = fullText;
+                $w('#button12').collapse();
+            } else {
+
+                shortText = fullText.substr(0, shortTextLength) + "...";
+                $w('#text12').text = shortText;
+            }
+    })
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function button12_click(event, $w) {
+    if ($w("#text12").text === shortText) {
+        $w("#text12").text = fullText;
+        $w("#button12").label = "Read less";
+    } else {
+        $w("#text12").text = shortText;
+        $w("#button12").label = "Read more";
+    }
+}
+
