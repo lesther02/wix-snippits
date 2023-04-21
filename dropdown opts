@@ -13,3 +13,34 @@ function loadCompany(){
 			$w("#dropdown2").options = Optionslist;
 	})
 }
+
+
+
+async function sizeOptions() {
+
+    let sizes = []
+
+    await wixData.query('Stores/Products')
+        .eq('collections', dressesID)
+        .find()
+        .then((results) => {
+            results.items.forEach((item) => {
+                if (item.productOptions.SIZES !== undefined) {
+                    let obj = item.productOptions.SIZES.choices
+
+                    if (Object.keys(obj).length > 0) {
+                        obj.forEach(v => {
+                            if (!sizes.includes(v.value))
+                                sizes.push(v.value)
+                        })
+                    }
+                }
+            })
+        })
+
+    $w('#dropdown1').options = sizes.map(function (v) {
+        return { "label": v, "value": v }
+    })
+    console.log('done')
+
+}
