@@ -14,7 +14,7 @@ function loadCompany(){
 	})
 }
 
-
+-------------------------------------------------------------------------------------------------------------------------------------------
 
 async function sizeOptions() {
 
@@ -43,4 +43,28 @@ async function sizeOptions() {
     })
     console.log('done')
 
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function colorOptions() {
+
+    wixData.query('Jewelry')
+        .descending('color')
+        .find()
+        .then(res => {
+            const uniqueTitles = getUniqueTitles(res.items)
+            $w("#checkboxGroup1").options = buildOptions(uniqueTitles);
+        })
+
+        function getUniqueTitles(items){
+            const titlesOnly = items.map(item => item.color)
+            return [...new Set(titlesOnly)]
+        }
+
+        function buildOptions(uniqueList){
+            return uniqueList.map(curr => {
+                return {label: curr, Value: curr}
+            })
+        }
 }
