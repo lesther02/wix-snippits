@@ -1,0 +1,56 @@
+import wixUsers from 'wix-users';
+import wixLocation from 'wix-location';
+
+$w.onReady(async function () {
+    let found
+
+    await wixUsers.currentUser.getRoles()
+        .then((roles) => {
+
+            console.log(roles)
+            found = roles.find((rol) => rol.name=="CK Kids Members");
+
+            console.log('Received ' + roles.length + ' roles');
+        })
+
+        if(found){
+            $w("#dynamicDataset").onReady(() => {
+
+                let itemObj = $w("#dynamicDataset").getCurrentItem()
+
+                $w('#image7').src = itemObj.image
+                $w('#text17').text = itemObj.name
+
+                $w('#button2').onClick(() => {
+                    wixLocation.to(itemObj.documentLink)
+                })
+
+                if(itemObj.members !== undefined){
+                $w('#button3').onClick(() => {
+                    wixLocation.to(itemObj.cKidsMembers)
+                })
+                }else{
+                    $w('#button3').hide()
+                }
+            })
+        }else{
+            $w("#dynamicDataset").onReady(() => {
+                let itemObj = $w("#dynamicDataset").getCurrentItem()
+
+                $w('#image7').src = itemObj.image
+                $w('#text17').text = itemObj.name
+
+                $w('#button2').onClick(() => {
+                    wixLocation.to(itemObj.documentLink)
+                })
+
+                if(itemObj.members !== undefined){
+                $w('#button3').onClick(() => {
+                    wixLocation.to(itemObj.members)
+                })
+                }else{
+                    $w('#button3').hide()
+                }
+            })
+        }
+});
