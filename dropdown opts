@@ -68,3 +68,20 @@ function colorOptions() {
             })
         }
 }
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function loadProduct() {
+	wixData.query('CUSTOMERCOMMENTS')
+  	.find()
+		.then(results => {
+			const uniqueFieldValues = getUniqueFieldValues(results.items, "product");
+      var options = uniqueFieldValues.sort(function(a, b){
+          if(a < b) { return -1; }
+          if(a > b) { return 1; }
+          return 0;
+      })
+			$w('#categoryDropdown').options = buildOptions(options);
+		});
+}
