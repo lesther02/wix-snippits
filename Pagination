@@ -1,0 +1,75 @@
+import wixData from 'wix-data';
+
+let limit = 3
+
+$w.onReady(function () {
+
+    loadWorkshop()
+
+	$w("#paginationBar").currentPage = 1;
+
+});
+
+async function loadWorkshop(){
+    await wixData.query('Workshop')
+    .ascending('_createdDate')
+    .limit(limit)
+    .find()
+    .then((res) => {
+        setPagination(res.totalCount)
+        console.log(res)
+        $w('#repeater1').data = res.items
+        initRepeater()
+    }).catch(err=>{
+        console.log(err)
+    })
+}
+
+async function setPagination(totalItems){
+    let totalPages = Math.ceil(totalItems / limit)
+    $w('#paginationBar').totalPages = totalPages
+}
+
+async function initRepeater() {
+    $w('#repeater1').onItemReady(($item, itemData, index) => {
+        $item('#image1').src = itemData.image
+        $item('#text31').text = itemData.title
+        $item('#text32').text = itemData.description
+    });
+}
+
+export function paginationBar_click(event) {
+	let paged = event.target.currentPage;
+    let skipValue = ((paged - 1) * limit);
+    showRepeater(skipValue)
+}
+
+export async function showRepeater(skip = 0) {
+
+    $w('#repeater1').data = []
+    let data = []
+    let dataQuery = wixData.query('Workshop').limit(limit)
+
+    if(skip>0){
+        dataQuery = dataQuery.skip(skip)
+    }
+
+    await dataQuery
+        .find()
+        .then((res) => {
+            setPagination(res.totalCount)
+            console.log(res)
+            if (res.items.length > 0) {
+                
+                res.items.forEach(item => {
+                    data.push(item)
+                    console.log('item: ' + item)
+                })
+            }
+        })
+
+    $w('#repeater1').data = data
+
+    initRepeater()
+    console.log('done')
+}
