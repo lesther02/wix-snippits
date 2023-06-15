@@ -4,8 +4,7 @@ export function columnStrip1_viewportEnter(event) {
 timeline.play(); 
 }
 
-let timeline = wixAnimations.timeline({"repeat": -1, "yoyo": true
-});
+let timeline = wixAnimations.timeline({"repeat": -1, "yoyo": true});
 
 
 $w.onReady( function () {
