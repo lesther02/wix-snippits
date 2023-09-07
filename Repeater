@@ -1,0 +1,23 @@
+//----------ADD REPEATER----------
+
+let dataMore = []
+//     let data = $w("#repeater1").data;
+//     let size = data.length
+//     let next = size + 1
+
+//     if (next <= 11) {
+//         dataMore = data
+//         dataMore.push({ '_id': 'item' + next.toLocaleString() })
+
+//         $w('#repeater1').data = dataMore
+//     }
+
+//----------DELETE REPEATER----------
+
+let data = $w("#repeater1").data;
+//     let size = data.length
+//     let popped = data.pop()
+
+//     if (size >= 2) {
+//         $w('#repeater1').data = data
+//     }
