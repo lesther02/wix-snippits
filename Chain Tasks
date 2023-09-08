@@ -1,0 +1,28 @@
+
+    const toCheckUser = async ()=>{ console.log('check user'); await checkUser() }
+    const toLoadSpecialties = async ()=>{
+        console.log('check specialties');
+        await loadSpecialties()
+    }
+    const toLoadTherapy = async ()=>{
+        console.log('check therapy');
+        await loadTherapy()
+    }
+    const toLoadInsurance = async ()=>{
+        console.log('check insurace');
+        await loadInsurance()
+    }
+    const toLoadLicense = async ()=>{
+        console.log('check license');
+        await loadLicense()
+    }
+
+    let tasker = [toCheckUser,toLoadSpecialties,toLoadTherapy,toLoadInsurance,toLoadLicense]
+
+    const performer = async ()=>{
+        for(let task of tasker){
+            await task()
+        }
+    }
+
+    performer()
