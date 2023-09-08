@@ -1,28 +1,30 @@
 
-    const toCheckUser = async ()=>{ console.log('check user'); await checkUser() }
-    const toLoadSpecialties = async ()=>{
-        console.log('check specialties');
-        await loadSpecialties()
-    }
-    const toLoadTherapy = async ()=>{
-        console.log('check therapy');
-        await loadTherapy()
-    }
-    const toLoadInsurance = async ()=>{
-        console.log('check insurace');
-        await loadInsurance()
-    }
-    const toLoadLicense = async ()=>{
-        console.log('check license');
-        await loadLicense()
-    }
+const toCheckUser = async ()=>{ 
+await checkUser() 
+}
 
-    let tasker = [toCheckUser,toLoadSpecialties,toLoadTherapy,toLoadInsurance,toLoadLicense]
+const toLoadSpecialties = async ()=>{
+await loadSpecialties()
+}
 
-    const performer = async ()=>{
-        for(let task of tasker){
-            await task()
-        }
-    }
+const toLoadTherapy = async ()=>{
+await loadTherapy()
+}
 
-    performer()
+const toLoadInsurance = async ()=>{
+await loadInsurance()
+}
+
+const toLoadLicense = async ()=>{
+await loadLicense()
+}
+
+let tasker = [toCheckUser,toLoadSpecialties,toLoadTherapy,toLoadInsurance,toLoadLicense]
+
+const performer = async ()=>{
+for(let task of tasker){
+await task()
+}
+}
+
+performer()
