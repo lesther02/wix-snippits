@@ -1,0 +1,15 @@
+let allItems
+
+await wixData.query('Wineries')
+        .ascending('title')
+        .limit(5)
+        .find()
+        .then(async (res) => {
+            allItems = res.items;
+            while (res.hasNext()) {
+                res = await res.next();
+                allItems = allItems.concat(res.items);
+            }
+        })
+
+let res = allItems.filter(x => x.address.formatted.toLowerCase().includes(value));
