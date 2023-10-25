@@ -1,0 +1,17 @@
+import wixAnimations from 'wix-animations'
+
+let scopeplay = wixAnimations.timeline({ "repeat": 0, "yoyo": true });
+
+$w.onReady(function () {
+
+    const scope = $w('#fullWidthSlides1');
+
+    scopeplay
+        .add(scope, {
+            "scale": 1.4,
+            "duration": 6000,
+            "easing": "easeLinear"
+        });
+    scopeplay.play();
+    
+    })
