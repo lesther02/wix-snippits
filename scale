@@ -15,3 +15,22 @@ $w.onReady(function () {
     scopeplay.play();
     
     })
+
+----------------------------------------------------------------------------------------------------------------------
+// zoom out-----------------------------------------------------------------------------------------------------------
+
+let bannerplay = wixAnimations.timeline({ "repeat": 0, "yoyo": true });
+
+const banner = $w('#fullWidthSlides1')
+
+bannerplay
+        .add(banner, {
+            "scale": 1.4,
+            "duration": 0,
+        })
+        .add(banner, {
+            "scale": 1,
+            "duration": 6000,
+            "easing": "easeLinear"
+        });
+    bannerplay.play();
