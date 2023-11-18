@@ -1,0 +1,4 @@
+if (res['prevSkipNumber'] < 0) {
+  start = 1
+}
+  $w('#text18').text = `Showing ${start} - ${res['nextSkipNumber']} of ${total}`
