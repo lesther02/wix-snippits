@@ -10,16 +10,16 @@ if (res['prevSkipNumber'] < 0) {
 
 let start
 if (res['prevSkipNumber'] < 0) {
-                start = 1
-            } else {
-                start = (($w("#pagination1").currentPage - 1) * limit) + 1
-            }
-            $w('#text18').text = `Showing ${start} - ${res['nextSkipNumber']} of ${total}`
+  start = 1
+} else {
+  start = (($w("#pagination1").currentPage - 1) * limit) + 1
+}
+$w('#text18').text = `Showing ${start} - ${res['nextSkipNumber']} of ${total}`
 
 ----------search----------
 
 let start
 if (results['prevSkipNumber'] < 0) {
-                start = 1
-            }
-            $w('#text18').text = `Showing ${start} - ${results['nextSkipNumber']} of ${total}`
+  start = 1
+}
+$w('#text18').text = `Showing ${start} - ${results['nextSkipNumber']} of ${total}`
