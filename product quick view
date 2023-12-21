@@ -1,0 +1,16 @@
+import { product } from 'wix-stores-frontend';
+
+// ...
+
+$w('#myButton').onclick(() => {
+  const productId = "c329246b-d521-feb4-85f5-539ca992d73a";
+
+  product.openQuickView(productId)
+    .then(() => {
+      console.log('Opening Quick View...');
+    })
+    .catch((error) => {
+      console.error(error);
+      // Handle the error
+    });
+});
